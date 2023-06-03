@@ -1,0 +1,277 @@
+{
+	"info": {
+		"_postman_id": "55edb0f9-ecfa-482f-8168-95641d78fc87",
+		"name": "Final Task",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "27498374",
+		"_collection_link": "https://www.postman.com/aviation-administrator-50636526/workspace/api-testing/collection/27498374-55edb0f9-ecfa-482f-8168-95641d78fc87?action=share&creator=27498374&source=collection_link"
+	},
+	"item": [
+		{
+			"name": "Obtain Auth Token",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response status code is 201\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Save auth token\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.environment.set(\"api_token\", jsonData.token);\r",
+							"});\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "email",
+							"value": "{{Email}}",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "{{Password}}",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "https://demo.placelab.com/api/v2/sessions",
+					"protocol": "https",
+					"host": [
+						"demo",
+						"placelab",
+						"com"
+					],
+					"path": [
+						"api",
+						"v2",
+						"sessions"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Creating a Report with File Upload",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response status code is 201\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Save id\", function () {\r",
+							"    var jsonVariable = JSON.parse(responseBody);\r",
+							"    pm.environment.set(\"id\", jsonVariable.api_token);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "token={{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "file",
+							"type": "file",
+							"src": "/C:/Users/semir/Downloads/duplicate_detection_sample.txt"
+						}
+					]
+				},
+				"url": {
+					"raw": "https://demo.placelab.com/api/v2/reports/duplicate_detection?name=Duplicate Detection Report&categorization_column=Catagories&categorization_column_index=13&standardizer=plab&treshold=0.3&limit=5",
+					"protocol": "https",
+					"host": [
+						"demo",
+						"placelab",
+						"com"
+					],
+					"path": [
+						"api",
+						"v2",
+						"reports",
+						"duplicate_detection"
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "Duplicate Detection Report"
+						},
+						{
+							"key": "categorization_column",
+							"value": "Catagories"
+						},
+						{
+							"key": "categorization_column_index",
+							"value": "13"
+						},
+						{
+							"key": "standardizer",
+							"value": "plab"
+						},
+						{
+							"key": "treshold",
+							"value": "0.3"
+						},
+						{
+							"key": "limit",
+							"value": "5"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Obtain Report Status",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "token=8ddf1a6a5990952e052fb9e252578d16",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://demo.placelab.com/api/v2/reports/182270/status",
+					"protocol": "https",
+					"host": [
+						"demo",
+						"placelab",
+						"com"
+					],
+					"path": [
+						"api",
+						"v2",
+						"reports",
+						"182270",
+						"status"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Download Result File",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "token=8ddf1a6a5990952e052fb9e252578d16",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://demo.placelab.com/api/v2/reports/182431/download",
+					"protocol": "https",
+					"host": [
+						"demo",
+						"placelab",
+						"com"
+					],
+					"path": [
+						"api",
+						"v2",
+						"reports",
+						"182431",
+						"download"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "api_token",
+			"value": ""
+		},
+		{
+			"key": "id",
+			"value": ""
+		}
+	]
+}
